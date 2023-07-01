@@ -21,17 +21,25 @@ R_success = options.R_success;
 R_timeout = options.R_timeout; %needs trajectory.timeouts
 
 flag_collision = false;
+% Assign negative/positive reward for fuel consumption and collision (using
+% done, so for last step we must make particular considerations)
 for i = 1:n
     reward(i) = -norm(K_action*dt(i)*u(:,i));
-    if (~flag_collision && trajectory.done(i))
+    if (~flag_collision && trajectory.done(i) && i~=n)
         flag_collision = true;
         reward(i) = reward(i) + R_collision;
     end
 end
 
 xend = x(:,end);
+% if last one is success assign reward for successful completion, otherwise
+% check if impact at last timestep
 if database.check_success(xend,parameters)
     reward(end) = reward(end) + R_success;
+else
+    if (trajectory.done(end))
+        reward(end) = reward(end) + R_collision;
+    end
 end
 
 end
