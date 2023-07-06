@@ -24,11 +24,12 @@ Nsave = defaultOptionsValues{2};
 Nbatches = floor(Ntot/Nsave);
 printLevel = defaultOptionsValues{3};
 saveDir = defaultOptionsValues{4};
+rngSeed = defaultOptionsValues{5};
 
 % 2) set options and parameters
 
 % ---- GENERATOR AND DATABASE ----- %
-rng(42);
+rng(rngSeed);
 
 % ----- PARAMETERS FOR DYNAMIC SIMULATION ----- %
 LC = 1.5; % length side chaser box

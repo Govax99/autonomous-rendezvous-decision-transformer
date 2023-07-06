@@ -1,7 +1,7 @@
 function defaultOptionsValues = set_options(optionsNames,optionsValues)
 
-supportedOptions = ["-ntot", "-nsave", "-printlevel", "-savedir"];
-defaultOptionsValues = {10000, 500, 0, "results"}; % because matlab does not have dictionaries
+supportedOptions = ["-ntot", "-nsave", "-printlevel", "-savedir", "-rngseed"];
+defaultOptionsValues = {10000, 500, 0, "results", 42}; % because matlab does not have dictionaries
 if (length(optionsNames) ~= length(optionsValues))
     error("Different number of option names and values.")
 end
