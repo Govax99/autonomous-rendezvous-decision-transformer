@@ -3,7 +3,7 @@ function [] = create_database(varargin)
 % https://github.com/casadi/casadi/releases/download/3.6.3/casadi-3.6.3-linux64-matlab2018b.zip
 % https://github.com/yoptimization/yop/archive/refs/tags/v1.0-rc3.zip
 % usage example:
-% !matlab -nodesktop -nosplash -r "create_database -ntot 2 -nsave 1 -printlevel 2"
+% !matlab -nodesktop -nosplash -r "create_database -ntot 2 -nsave 1 -printlevel 2 -savedir results2 -rngseed 43"
 addpath(genpath('casadi'));
 addpath(genpath('yop-1.0-rc3'));
 
@@ -71,7 +71,7 @@ infos = strings(1,Nsave);
 db(1:Nsave) = struct("objective",[],"success",[],"time",[],"observation",[],"action",[],"done",[],"reward",[]);
 mkdir(saveDir)
 for k = 1:Nbatches
-    parfor (i = 1:Nsave,8)
+    parfor (i = 1:Nsave,12)
         [tj, tsolve] = database.generate_trajectory(options, parameters);
         infos(i) = visualization.info_trajectory(tj,tsolve,i);
         results(i) = tj.success;
