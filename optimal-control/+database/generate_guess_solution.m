@@ -1,6 +1,17 @@
 function guess_traj = generate_guess_solution(x_init,x_final,parameters,t_F)
-%GENERATE_GUESS_SOLUTION Summary of this function goes here
-%   Detailed explanation goes here
+%DESCRIPTION generate an initial guess solution for the optimal control
+%problem (using PD control) given initial and end states and maneuver time
+%
+% INPUT:
+% OUTPUT:
+%	 x_init              initial state of the maneuver (chaser+target)
+%	 x_final             final state of the maneuver (chaser+target)
+%    parameters          structure containing parameters for the dynamics
+%    t_F                 time for the maneuver
+%
+% OUTPUT:
+%	 guess_traj          contains time, states and control action of the initial guess trajectory
+%
 
     % ----- TIME ----- %
     N = 1000;

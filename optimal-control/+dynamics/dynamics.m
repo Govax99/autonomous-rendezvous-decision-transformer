@@ -1,8 +1,26 @@
 function [dx, y] = dynamics(time, state, parameters, control)
-% parameters (I don't know if there is a better way to pass them) -> some
-% may change with state (orientation of chaser)
-% parameters (I don't know if there is a better way to pass them) -> some
-% may change with state (orientation of chaser)
+%DESCRIPTION state-space form of chaser dynamics for ode integration
+% (linear dynamics in L-frame, angular dynamics in C-frame)
+%
+% INPUT:
+%    time                current integration time
+%    state               current chaser state [p_LC_L, v_LC_L, q_LC, w_IC_C]
+%    parameters          structure containing parameters for the dynamics
+%    control             control action [f, tau]
+%
+% OUTPUT:
+%	 dx  	             derivative of state
+%    y                   additional output info for optimal control
+%
+% LEGEND FRAMES:
+%    L-frame             LVLH, local vertical-local horizontal frame, center on target cm
+%    C-frame             relative frame, attached to chaser object, center on chaser cm
+%
+% MONOGRAM NOTATION:
+%    p_XY_Z              p: symbol of physical quantity,
+%                        X: "measured from",
+%                        Y: target point/frame,
+%                        Z: "expressed in" frame
 [J_C,~,m_C,OM] = dynamics.set_parameters(parameters);
 OM_IL_L = [0; 0; OM];
 
@@ -18,7 +36,6 @@ tau = control(4:6);
 
 R_LC = quat.quat2rotm(q_LC);
 w_LC_L = R_LC * w_IC_C - OM_IL_L;
-% w_LC_C = w_IC_C - R_LC' * OM_IL_L;
 
 A_C = quat.quat_kin_matrix(w_LC_L);
 
@@ -38,10 +55,7 @@ y.R_LC = R_LC;
 y.w_IC_C = w_IC_C;
 y.w_LC_L = w_LC_L;
 y.q_LC = q_LC;
-% y.R_LT = R_LT;
-% y.w_IT_T = w_IT_T;
-% y.w_LT_L = w_LT_L;
-% y.q_LT = q_LT;
+
 y.u = control;
 y.f = f;
 y.tau = tau;

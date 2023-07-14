@@ -1,4 +1,9 @@
 function plot_trajectory(traj)
+%DESCRIPTION plot a rendezvous operation
+%
+% INPUT:
+%    traj                structure containing relevant trajectory data from o.c.
+%
 x = traj.observation;
 xC = x(1:3,:);
 xT = zeros(size(xC));

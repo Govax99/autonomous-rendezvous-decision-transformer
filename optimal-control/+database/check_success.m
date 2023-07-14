@@ -1,5 +1,14 @@
 function s = check_success(x,parameters)
-%CHECK_SUCCESS Summary of this function goes here
+%DESCRIPTION given the berthing point (in parameters), check if the current
+%state x is in berthing position
+%
+% INPUT:
+%    state               current total state [p_LC_L, v_LC_L, q_LC, w_IC_C, q_LT, w_IT_T]
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%	 s                   boolean, true if in berthing position
+%
 [~,~,~,OM,pberth] = dynamics.set_parameters(parameters);
 
 tol = 1e-6;

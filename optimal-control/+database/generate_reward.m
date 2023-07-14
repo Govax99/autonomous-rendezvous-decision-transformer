@@ -1,6 +1,15 @@
 function reward = generate_reward(trajectory, parameters, options)
-%GENERATE_REWARD Summary of this function goes here
-%   Detailed explanation goes here
+%DESCRIPTION given a certain trajectory determine reward at each instant of
+%time, the reward sign is contained in the sign of the options parameters
+%
+% INPUT:
+%    trajectory          structure containing relevant trajectory data from o.c.
+%    parameters          structure containing parameters for the dynamics
+%    options             contain coefficients for reward assignment
+%
+% OUTPUT:
+%	 reward              reward at each time of the trajectory
+%
 
 % 1) choose what's inside reward (K_action (or K_state), R_collision,
 % R_success)

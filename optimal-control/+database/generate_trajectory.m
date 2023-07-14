@@ -1,6 +1,15 @@
 function [trajectory,tsolve] = generate_trajectory(options, parameters)
-%GENERATE_TRAJECTORY Summary of this function goes here
-%   Detailed explanation goes here
+%DESCRIPTION given certain options and parameters generate a trajectory,
+%using PD control for initial guess and Yop optimal control direct-solver
+%
+% INPUT:
+%    options             contain coefficients for reward assignment
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%    trajectory          structure containing relevant trajectory data from o.c.
+%    tsolve              computational time spent in the solution (in seconds)
+%
 [x_init,x_final] = database.generate_boundaries(options,parameters);
 
 tsolve = NaN;
@@ -17,10 +26,8 @@ for i = 1:max_tries
     t_F = t_F + 5;
 end
 
-% should I completely discard non correct solutions? An agent would learn
-% better with also some info on what not to do
-% also how termination due to time will appear if this is not considered
-
+% discard initial guesses that do not connect arrive near enough generated
+% initial and final points
 if (flag == 0)
     trajectory.success = -1;
     t = guess_traj.t;

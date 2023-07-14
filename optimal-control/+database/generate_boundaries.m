@@ -1,4 +1,14 @@
 function [x_init,x_final] = generate_boundaries(options,parameters)
+%DESCRIPTION generate initial and final states for the rendezvous maneuver
+%
+% INPUT:
+%    options             contain range limitation in which the states get sampled
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%	 x_init              initial state of the maneuver (chaser+target)
+%	 x_final             final state of the maneuver (chaser+target)
+%
     [~,~,~,OM,pberth] = dynamics.set_parameters(parameters);
     
     xpos_lim   = options.xpos_lim;

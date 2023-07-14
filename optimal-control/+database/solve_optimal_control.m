@@ -1,4 +1,15 @@
 function sol = solve_optimal_control(guess_traj, parameters, options)
+%DESCRIPTION given a guess trajectory (PD control) solve an optimal control
+%problem to minimize propellant usage
+%
+% INPUT:
+%	 guess_traj          contains time, states and control action of the initial guess trajectory
+%    options             contain solver options parameters
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%    sol                 structure containing solution to the optimal control problem
+%
 [~,~,~,~,~,~,~,~,u_lim,r2] = dynamics.set_parameters(parameters);
 if (~isfield(options,'optimal_control_tol'))
     options.optimal_control_tol = 1e-2;

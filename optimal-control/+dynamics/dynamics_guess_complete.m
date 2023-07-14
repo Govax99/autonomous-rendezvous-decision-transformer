@@ -1,6 +1,29 @@
 function [dx, f, tau] = dynamics_guess_complete(time, state, parameters, control)
-% parameters (I don't know if there is a better way to pass them) -> some
-% may change with state (orientation of chaser)
+%DESCRIPTION state-space form of chaser and target dynamics (can handle control input
+% as matlab function, useful for PID control)
+% (linear dynamics in L-frame, angular dynamics in C-frame, T-frame)
+%
+% INPUT:
+%    time                current integration time
+%    state               current total state [p_LC_L, v_LC_L, q_LC, w_IC_C, q_LT, w_IT_T]
+%    parameters          structure containing parameters for the dynamics
+%    control             control action [f, tau]
+%
+% OUTPUT:
+%	 dx  	             derivative of state
+%    f                   control force (in L-frame)
+%    tau                 control torque (in C-frame)
+%
+% LEGEND FRAMES:
+%    L-frame             LVLH, local vertical-local horizontal frame, center on target cm
+%    C-frame             relative frame, attached to chaser object, center on chaser cm
+%    T-frame             relative frame, attached to target object, center on target cm
+%
+% MONOGRAM NOTATION:
+%    p_XY_Z              p: symbol of physical quantity,
+%                        X: "measured from",
+%                        Y: target point/frame,
+%                        Z: "expressed in" frame
 [J_C,J_T,m_C,OM] = dynamics.set_parameters(parameters);
 OM_IL_L = [0; 0; OM];
 

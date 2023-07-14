@@ -1,6 +1,25 @@
 function [J_C,J_T,m_C,OM,pberth,kP_tr,kD_tr,kP_rot,u_lim,r2] = set_parameters(parameters)
-%SET_PARAMETERS Summary of this function goes here
-%   Detailed explanation goes here
+%DESCRIPTION extract parameters from structure (if they exists otherwise set defaults)
+%
+% INPUT:
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%	 J_C  	             moment of inertia of chaser (in C-frame)
+%	 J_T  	             moment of inertia of target (in T-frame)
+%	 m_C  	             total mass of chaser
+%    OM                  orbital circular velocity
+%    pberth              position of berthing point in T-frame
+%    kP_tr               proportional coefficient matrix (PD translation control)
+%    kD_tr               differential coefficient matrix (PD translation control)
+%    kP_rot              proportional coefficient matrix (P rotational control)
+%    u_lim               control action limits (force limits in L-frame, torque limits in C-frame)
+%    r2                  radius squared of the keep-out sphere
+%
+% LEGEND FRAMES:
+%    C-frame             relative frame, attached to chaser object, center on chaser cm
+%    T-frame             relative frame, attached to target object, center on target cm
+%
 if (~isfield(parameters,'J_C'))
     J_C = eye(3);
 else

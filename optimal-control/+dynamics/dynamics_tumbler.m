@@ -1,6 +1,24 @@
 function dx = dynamics_tumbler(time, state, parameters)
-%DYNAMICS_TUMBLER Summary of this function goes here
-%   Detailed explanation goes here
+%DESCRIPTION state-space form of tumbling-target dynamics for ode integration
+% (linear dynamics in L-frame, angular dynamics in T-frame)
+%
+% INPUT:
+%    time                current integration time
+%    state               current chaser state [q_LT, w_IT_T]
+%    parameters          structure containing parameters for the dynamics
+%
+% OUTPUT:
+%	 dx  	             derivative of state
+%
+% LEGEND FRAMES:
+%    L-frame             LVLH, local vertical-local horizontal frame, center on target cm
+%    T-frame             relative frame, attached to target object, center on target cm
+%
+% MONOGRAM NOTATION:
+%    p_XY_Z              p: symbol of physical quantity,
+%                        X: "measured from",
+%                        Y: target point/frame,
+%                        Z: "expressed in" frame
 [~,J_T,~,OM] = dynamics.set_parameters(parameters);
 OM_IL_L = [0; 0; OM];
 
