@@ -1,5 +1,10 @@
 function defaultOptionsValues = set_options(optionsNames,optionsValues)
-
+%DESCRIPTION set database generation options, if not present set defaults
+%
+% INPUT:
+%	 optionsNames        strings indicating name of the option (those that begin with "-")
+%    optionsValues       strings indicating value of the option
+%
 supportedOptions = ["-ntot", "-nsave", "-printlevel", "-savedir", "-rngseed"];
 defaultOptionsValues = {10000, 500, 0, "results", 42}; % because matlab does not have dictionaries
 if (length(optionsNames) ~= length(optionsValues))

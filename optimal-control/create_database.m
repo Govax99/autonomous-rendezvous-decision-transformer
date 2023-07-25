@@ -1,13 +1,24 @@
 function [] = create_database(varargin)
-% before usage, install from these sources (and add to matlab path all needed):
+% USAGE: command line tool for database generation, follows an example:
+% !matlab -nodesktop -nosplash -r "create_database -ntot 2 -nsave 1 -printlevel 2 -savedir results -rngseed 42"
+%
+% INPUT:
+%    -ntot               total trajectories to generate
+%    -nsave              number of trajectories in one sub-batch (intermediate save size)
+%    -printlevel         level of information shown while solving (0,1,2)
+%    -savedir            directory in which to save the results
+%    -rngseed            random number generator seed (for reproducibility)
+%
+% BEFORE USAGE: 
+% clone the git repository: https://github.com/Govax99/autonomous-rendezvous-decision-transformer.git
+% download and unzip from these sources (in optimal-control folder):
 % https://github.com/casadi/casadi/releases/download/3.6.3/casadi-3.6.3-linux64-matlab2018b.zip
 % https://github.com/yoptimization/yop/archive/refs/tags/v1.0-rc3.zip
-% usage example:
-% !matlab -nodesktop -nosplash -r "create_database -ntot 2 -nsave 1 -printlevel 2 -savedir results2 -rngseed 43"
+% 
 addpath(genpath('casadi'));
 addpath(genpath('yop-1.0-rc3'));
 
-% 1) deal with options
+% set default options if needed
 optionsNames = string(varargin(1:2:end));
 optionsValues = varargin(2:2:end);
 for k = 1:length(optionsValues)
@@ -26,9 +37,8 @@ printLevel = defaultOptionsValues{3};
 saveDir = defaultOptionsValues{4};
 rngSeed = defaultOptionsValues{5};
 
-% 2) set options and parameters
-
 % ---- GENERATOR AND DATABASE ----- %
+fprintf("Seed: %d\n",rngSeed)
 rng(rngSeed);
 
 % ----- PARAMETERS FOR DYNAMIC SIMULATION ----- %
@@ -64,13 +74,16 @@ options.qtheta_lim = [0 90];
 options.evaluation_points = 101;
 
 
-
+% initialize database and result arrays
 tproc = zeros(1,Nsave);
 results = zeros(1,Nsave);
 infos = strings(1,Nsave);
 db(1:Nsave) = struct("objective",[],"success",[],"time",[],"observation",[],"action",[],"done",[],"reward",[]);
 mkdir(saveDir)
+
+% external for loop, generate batch and save results
 for k = 1:Nbatches
+    % generate trajectories in parallel using optimal control
     parfor (i = 1:Nsave,12)
         [tj, tsolve] = database.generate_trajectory(options, parameters);
         infos(i) = visualization.info_trajectory(tj,tsolve,i);
