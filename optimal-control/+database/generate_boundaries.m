@@ -19,7 +19,7 @@ function [x_init,x_final] = generate_boundaries(options,parameters)
     wz_lim     = options.wz_lim;
     qaxis_lim  = options.qaxis_lim;
     qtheta_lim = options.qtheta_lim;
-    
+    rng shuffle;
     % ----- FINAL STATE DEFINITION ----- %
     qv = (qaxis_lim(:,2) - qaxis_lim(:,1)).*rand(3,1) + qaxis_lim(:,1);
     qtheta = (qtheta_lim(2) - qtheta_lim(1))*rand + qtheta_lim(1);

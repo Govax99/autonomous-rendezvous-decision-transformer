@@ -39,7 +39,7 @@ rngSeed = defaultOptionsValues{5};
 
 % ---- GENERATOR AND DATABASE ----- %
 fprintf("Seed: %d\n",rngSeed)
-rng(rngSeed);
+rng shuffle;
 
 % ----- PARAMETERS FOR DYNAMIC SIMULATION ----- %
 LC = 1.5; % length side chaser box
