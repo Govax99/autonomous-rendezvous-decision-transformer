@@ -15,8 +15,8 @@ function [] = create_database(varargin)
 % https://github.com/casadi/casadi/releases/download/3.6.3/casadi-3.6.3-linux64-matlab2018b.zip
 % https://github.com/yoptimization/yop/archive/refs/tags/v1.0-rc3.zip
 % 
-addpath(genpath('casadi'));
-addpath(genpath('yop-1.0-rc3'));
+addpath(genpath('..\..\optimal-control\casadi'));
+addpath(genpath('..\..\optimal-control\yop-1.0-rc3'));
 
 % set default options if needed
 optionsNames = string(varargin(1:2:end));
@@ -44,33 +44,27 @@ rng shuffle;
 % ----- PARAMETERS FOR DYNAMIC SIMULATION ----- %
 LC = 1.5; % length side chaser box
 LT = 3; % length side target box
-parameters.J_C = diag([2/3, 2/5, 2/3]);
-parameters.J_T = diag([11/3, 3, 11/3]);
+parameters.J_C = 2/3;
+parameters.J_T = 11/3;
 parameters.m_C = 1;
 parameters.OM = 7.272e-5;
-parameters.pberth = [5 0 0]';
-parameters.kP_tr = 0.1*eye(3);
-parameters.kD_tr = 1*eye(3);
-parameters.kP_rot = 1*eye(3);
-parameters.u_lim = ones(1,6);
+parameters.pberth = [5 0]';
+parameters.kP_tr = 0.1*eye(2);
+parameters.kD_tr = 1*eye(2);
+parameters.kP_rot = 1;
+parameters.u_lim = ones(1,3);
 parameters.r2 = 4^2; % keep out zone
 
 % ----- META-PARAMETERS: OPTIONS FOR SOLVERS AND REWARD DEFINITION ----- %
-options.K_action = eye(6);
+options.K_action = eye(3);
 options.R_success = 25;
 options.R_collision = -10;
 options.R_timeout = -5;
 
 options.xpos_lim = [-30 30];
 options.ypos_lim = [-30 30];
-options.zpos_lim = [-30 30];
-options.wx_lim = [-0.05 0.05];
-options.wy_lim = [-0.05 0.05];
-options.wz_lim = [-0.05 0.05];
-options.qaxis_lim = [-1 1; ...
-                     -1 1; ...
-                     -1 1];
-options.qtheta_lim = [0 90];
+options.w_lim = [-0.05 0.05];
+options.th_lim = [0 2*pi];
 options.evaluation_points = 101;
 
 

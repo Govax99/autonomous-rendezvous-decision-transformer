@@ -25,7 +25,7 @@ function guess_traj = generate_guess_solution(x_init,x_final,parameters,t_F)
     tspan = tspan(end:-1:1);
     
     % second pass to obtain the control actions
-    u = zeros(6, length(tspan));
+    u = zeros(3, length(tspan));
     for i = 1:length(tspan)
         [~, f, tau] = dynamics.dynamics_guess(tspan(i), x(:, i), parameters, pcontr);
         u(:,i) = [f; tau];

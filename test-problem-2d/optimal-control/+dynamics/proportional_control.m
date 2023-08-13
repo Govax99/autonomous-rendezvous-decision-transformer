@@ -20,17 +20,16 @@ function u = proportional_control(state, xref, parameters)
 %                        Y: target point/frame,
 %                        Z: "expressed in" frame
     [~,~,~,~,~,kP_tr,kD_tr,kP_rot,u_lim] = dynamics.set_parameters(parameters);
-    p_LC_L = state(1:3);
-    v_LC_L = state(4:6);
-    %q_LC = state(7:10);
-    w_IC_C = state(11:13);
+    p = state(1:2);
+    v = state(3:4);
+    w_c = state(6);
 
-    u = zeros(6,1);
-    u(1:3) = kP_tr*(xref(1:3) - p_LC_L) + kD_tr*v_LC_L;
+    u = zeros(3,1);
+    u(1:2) = kP_tr*(xref(1:2) - p) + kD_tr*v;
     
-    u(4:6) = kP_rot*w_IC_C;
+    u(3) = kP_rot*w_c;
     
-    for i = 1:6
+    for i = 1:3
         if (abs(u(i)) > u_lim(i))
             u(i) = sign(u(i));
         end

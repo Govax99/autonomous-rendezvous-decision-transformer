@@ -19,20 +19,16 @@ function dx = dynamics_tumbler(time, state, parameters)
 %                        X: "measured from",
 %                        Y: target point/frame,
 %                        Z: "expressed in" frame
-[~,J_T,~,OM] = dynamics.set_parameters(parameters);
-OM_IL_L = [0; 0; OM];
+[~,~,~,OM] = dynamics.set_parameters(parameters);
 
-q_LT = state(1:4)./norm(state(1:4));
-w_IT_T = state(5:7);
+theta_t = state(1);
+w_t = state(2);
 
-R_LT = quat.quat2rotm(q_LT);
-w_LT_L = R_LT * w_IT_T - OM_IL_L;
-
-A_T = quat.quat_kin_matrix(w_LT_L);
+w_lt = w_t - OM;
 
 dx = [
-    1/2*A_T*q_LT; ...
-    J_T\(-cross(w_IT_T, J_T*w_IT_T)); ...
+    w_lt; ...
+    0; ...
     ];
 end
 

@@ -24,8 +24,7 @@ p_check = support.rotm(th_t_final)*pberth;
 
 
 w_lc_l_final = w_c_final - OM; % ang. velocity of line of sight chaser-target
-v_check = cross([0 0 w_lc_l_final], [p_check; 0]); % chaser must have this velocity to keep up with rotation
-v_check = v_check(1:2);
+v_check = [-w_lc_l_final*p_check(2); w_lc_l_final*p_check(1)]; % chaser must have this velocity to keep up with rotation
 err = norm(p_final - p_check) + norm(v_final - v_check) + abs(th_c_final - th_t_final) + abs(w_c_final - w_t_final);
 s = err < tol;
 end
