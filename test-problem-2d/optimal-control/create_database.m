@@ -44,22 +44,23 @@ rng shuffle;
 % ----- PARAMETERS FOR DYNAMIC SIMULATION ----- %
 LC = 1.5; % length side chaser box
 LT = 3; % length side target box
-parameters.J_C = 2/3;
-parameters.J_T = 11/3;
-parameters.m_C = 1;
+parameters.J_C = 2/3*1500;
+parameters.J_T = 11/3*1500;
+parameters.m_C = 1500;
 parameters.OM = 7.272e-5;
 parameters.pberth = [5 0]';
-parameters.kP_tr = 0.1*eye(2);
-parameters.kD_tr = 1*eye(2);
-parameters.kP_rot = 1;
-parameters.u_lim = ones(1,3);
+parameters.kP_tr = 0.1*1000*eye(2);
+parameters.kD_tr = 1*1000*eye(2);
+parameters.kP_rot = 1*1000;
+parameters.u_lim = 25*ones(1,3);
 parameters.r2 = 4^2; % keep out zone
 
 % ----- META-PARAMETERS: OPTIONS FOR SOLVERS AND REWARD DEFINITION ----- %
-options.K_action = eye(3);
+options.K_action = 0.02*eye(3);
 options.R_success = 25;
-options.R_collision = -10;
-options.R_timeout = -5;
+options.R_collision = -25;
+options.R_timeout = -25;
+options.t_F = 200;
 
 options.xpos_lim = [-30 30];
 options.ypos_lim = [-30 30];
@@ -78,7 +79,7 @@ mkdir(saveDir)
 % external for loop, generate batch and save results
 for k = 1:Nbatches
     % generate trajectories in parallel using optimal control
-    parfor (i = 1:Nsave,12)
+    for i = 1:Nsave
         [tj, tsolve] = database.generate_trajectory(options, parameters);
         infos(i) = visualization.info_trajectory(tj,tsolve,i);
         results(i) = tj.success;

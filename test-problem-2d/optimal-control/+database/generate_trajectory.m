@@ -13,7 +13,7 @@ function [trajectory,tsolve] = generate_trajectory(options, parameters)
 [x_init,x_final] = database.generate_boundaries(options,parameters);
 
 tsolve = NaN;
-t_F = 35;
+t_F = options.t_F;
 max_tries = 3;
 tol = 0.5;
 flag = 0;
@@ -23,7 +23,7 @@ for i = 1:max_tries
         flag = 1;
         break;
     end
-    t_F = t_F + 5;
+    t_F = t_F + 100;
 end
 
 % discard initial guesses that do not connect arrive near enough generated

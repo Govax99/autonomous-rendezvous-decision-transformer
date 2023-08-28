@@ -31,7 +31,7 @@ function u = proportional_control(state, xref, parameters)
     
     for i = 1:3
         if (abs(u(i)) > u_lim(i))
-            u(i) = sign(u(i));
+            u(i) = u_lim(i)*sign(u(i));
         end
     end
 end

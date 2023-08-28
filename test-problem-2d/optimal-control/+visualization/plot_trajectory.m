@@ -29,7 +29,7 @@ title("Satellite Rendezvous - LVLH frame")
 xlabel('x [m]')
 ylabel('y [m]')
 axis('equal')
-lim = 10;
+lim = 30;
 xlim([-lim, lim])
 ylim([-lim, lim])
 grid on;
