@@ -79,7 +79,7 @@ mkdir(saveDir)
 % external for loop, generate batch and save results
 for k = 1:Nbatches
     % generate trajectories in parallel using optimal control
-    for i = 1:Nsave
+    parfor (i = 1:Nsave,12)
         [tj, tsolve] = database.generate_trajectory(options, parameters);
         infos(i) = visualization.info_trajectory(tj,tsolve,i);
         results(i) = tj.success;
